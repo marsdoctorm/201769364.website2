@@ -1,0 +1,142 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        body {
+            background: linear-gradient(to bottom, #87CEEB, #2f3a4a);
+            background-size: cover;
+        }
+        html, body {
+            height: 100%;
+        }
+        .talk_con{
+            width:800px;
+            height:600px;
+            border:3px solid #fff;
+            margin:50px auto 0;
+            background:transparent;
+            border-radius: 3px;
+        }
+        .talk_show{
+            width:760px;
+            height:520px;
+            border:0px solid #fff;
+            background: rgba(255, 255, 255, 0.5);
+            margin:20px 20px 0;
+            overflow:auto;
+            border-radius: 5px
+        }
+        .talk_input{
+            width:760px;
+            margin:10px 10px 0;
+        }
+        .talk_word{
+            width:660px;
+            height:30px;
+            padding:0px;
+            margin: 0 10px;
+            outline:none;
+            text-indent:10px;
+            border-radius: 5px
+            border: none;
+        }
+        .talk_sub{
+            width:60px;
+            height:30px;
+            margin-right:0px;
+            border: none;
+        }
+        .atalk{
+            margin:15px;
+        }
+        .atalk span{
+            display:inline-block;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius:5px;
+            color:#fff;
+            padding:5px 10px;
+        }
+        .btalk{
+            margin:15px;
+            text-align:right;
+        }
+        .btalk span{
+            display:inline-block;
+            background: rgba(221, 99, 191, 0.6);
+            border-radius:5px;
+            color:#fff;
+            padding:5px 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function(){
+            var Words = document.getElementById("words");
+            var TalkWords = document.getElementById("talkwords");
+            var TalkSub = document.getElementById("talksub");
+
+            // 初始欢迎消息
+            var initialMessages = [
+                '<div class="atalk"><span>Bot: Do you meet any problems？</span></div>',
+                '<div class="atalk"><span>1. How to make a exchange</span></div>',
+                '<div class="atalk"><span>2. About delivery</span></div>',
+                '<div class="atalk"><span>3. How to complain about a buyer/seller</span></div>',
+                '<div class="atalk"><span>4. Do you need assistance from a human customer service representative</span></div>'
+            ];
+
+            initialMessages.forEach(function(message) {
+                Words.innerHTML += message;
+            });
+
+            TalkSub.onclick = function(){
+                var str = "";
+                if(TalkWords.value == ""){
+                    alert("Empty Message!");
+                    return;
+                }
+
+                var userChoice = TalkWords.value.trim();
+
+                // B发送的消息
+                str = '<div class="btalk"><span>User :' + userChoice +'</span></div>';
+                Words.innerHTML = Words.innerHTML + str;
+
+                // A根据用户输入的数字提供不同的回复
+                var replyFromA = '';
+
+                if(userChoice === '1') {
+                    replyFromA = '<div class="atalk"><span>Bot：Please negotiate with the seller in private</span></div>';
+                } else if(userChoice === '2') {
+                    replyFromA = '<div class="atalk"><span>Bot：Please arrange a suitable time with the seller, or you can also use the platform\'s dedicated shipping service</span></div>';
+                } else if(userChoice === '3') {
+                    replyFromA = '<div class="atalk"><span>Bot：Please send the evidence to the email address yuxia.meng@outlook.com</span></div>';
+                } else {
+                    replyFromA = '<div class="atalk"><span>Bot：Our customer service will contact you shortly.</span></div>';
+                }
+
+                Words.innerHTML = Words.innerHTML + replyFromA;
+
+                // 清空输入框
+                TalkWords.value = "";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="talk_con">
+    <div class="talk_show" id="words">
+        <!-- 初始消息 -->
+    </div>
+    <div class="talk_input">
+        <!-- 只剩下B发言 -->
+        <input type="text" class="talk_word" id="talkwords">
+        <input type="button" value="Submit" class="talk_sub" id="talksub">
+    </div>
+</div>
+</body>
+</html>

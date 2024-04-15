@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <script src="/js/jquery-1.3.2.min.js">
+    </script>
+    <style>
+       body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 1);
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #87CEEB, #2f3a4a); /* 渐变背景 */
+
+}
+html, body {
+            height: 200%;
+        }
+
+        #main {
+            flex: 1;
+            width: 60%;
+            margin-top: 50px;
+        }
+        #typing {
+            flex: 1;
+            width: 100%;
+            height: 20vh;
+            border: 3px solid white;
+            border-radius: 3px;
+            font-size: larger;
+            padding: 10px;
+        }
+        #btn {
+            background-color: blue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        #commend {
+            flex: 1;
+            width: 80%;
+            margin-top: 20px;
+        }
+        p {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <h1>Feedback Form</h1>
+    <textarea id="typing" placeholder="Write your comments"></textarea>
+    <button id="btn" onclick="send()">Submit</button>
+    <div id="commend"></div>
+</div>
+
+<script>
+
+    $(function(){
+        load()
+    });
+    function send() {
+        let content = $("#typing").val();
+        let currentTime = new Date();
+        $.ajax({
+            url: '/comment/add',
+            type: 'POST',
+            data: JSON.stringify({"content": content,"time": formatDateTime(currentTime)}),
+            contentType: 'application/json',
+            success: function (response) {
+                if(response.result == 1){
+                    debugger
+                    $("#typing").val("");
+                    load();
+                }
+            }
+        });
+    }
+    function load(){
+        $("#commend").empty();
+        $.ajax({
+            url: '/comment/list',
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                let list = response.data;
+                for(let i = 0; i < list.length; i++){
+                    let p = document.createElement("p");
+                    p.innerHTML = "User：" + list[i].content + '<hr>' + list[i].time;
+                    $("#commend").prepend(p);
+                }
+            }
+        });
+    }
+    function formatDateTime(date) {
+        let year = date.getFullYear();
+        let month = padZero(date.getMonth() + 1);
+        let day = padZero(date.getDate());
+        let hours = padZero(date.getHours());
+        let minutes = padZero(date.getMinutes());
+        let seconds = padZero(date.getSeconds());
+        return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    }
+
+    function padZero(num) {
+        return num < 10 ? '0' + num : num;
+    }
+</script>
+</body>
+</html>

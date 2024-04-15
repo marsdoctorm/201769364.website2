@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Post item</title>
+    <link href="/css/home_page/header_and_nav.css" rel="stylesheet"/>
+    <link rel="icon" href="/img/page_icon.png"/>
+    <link href="/css/product/publish_product.css" rel="stylesheet"/>
+    <script src="/js/jquery-1.3.2.min.js"></script>
+    <script src="/js/home/header_model_js.js"></script>
+    <script src="/js/mall/type_list_obj.js"></script>
+    <script src="/js/publish/publish_product.js"></script>
+</head>
+<body>
+<header th:include="header :: copy"></header>
+<div th:include="short_nav_show :: short_nav_show" class="short_nav_show"></div>
+<nav th:include="my_nav :: my_nav" class="my_nav"></nav>
+<div th:include="personal_nav :: personal_nav" class="personal_nav"></div>
+<div style="display: none" th:if="${message}!=null" th:value="${message}" th:text="${message}" class="show_tip"></div>
+<div class="top_content">
+    <div class="publish_product_div">
+        <form action="/insertGoods.do" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:value="${token}" name="token"/>
+            <input type="hidden" th:value="${action}" value="1" name="action" class="action"/>
+            <input type="hidden" th:if="${shopInformation.id}!=null" th:value="${shopInformation.id}" name="id"/>
+            <input type="hidden" th:if="${shopInformation.id}==null" value="0" name="id"/>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Items</h3>
+                </div>
+                <div class="publish_content">
+                    <input type="text" class="title_input" name="name" required="required"
+                           th:if="${shopInformation.name}==null"/>
+                    <input type="text" class="title_input" name="name" required="required"
+                           th:if="${shopInformation.name}!=null" th:value="${shopInformation.name}"
+                    />
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>The level of usage</h3>
+                </div>
+                <div class="publish_content">
+                    <select class="choose_chengse" name="level">
+                        <div style="display: none" th:if="${shopInformation.level}!=null"
+                             th:switch="${shopInformation.level}">
+                            <option value="1">Almost Damaged</option>
+                            <option value="2">Slightly Used</option>
+                            <option value="3">In New Condition</option>
+                        </div>
+                        <option value="1">Almost Damaged</option>
+                        <option value="2">Slightly Used</option>
+                        <option value="3">In New Condition</option>
+                    </select>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Price</h3>
+                </div>
+                <div class="publish_content cost_content">
+                    <input type="text" class="cost_input" name="price" required="required"
+                           th:if="${shopInformation.price}==null"/>
+                    <input type="text" class="cost_input" name="price" required="required"
+                           th:if="${shopInformation.price}!=null" th:value="${shopInformation.price}"/>
+                    <span>  pound(.00)</span>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Number</h3>
+                </div>
+                <div class="publish_content">
+                    <input type="text" class="count_input" name="quantity" required="required"
+                           th:if="${shopInformation.quantity}==null"/>
+                    <input type="text" class="count_input" name="quantity" required="required"
+                           th:if="${shopInformation.quantity}!=null" th:value="${shopInformation.quantity}"/>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Detailed information</h3>
+                </div>
+                <div class="publish_content">
+                    <textarea class="detail_textarea" maxlength="122" placeholder="Please write your phone number" name="remark"
+                              required="required" th:if="${shopInformation.remark}==null"></textarea>
+                    <textarea class="detail_textarea" maxlength="122" placeholder="Please write your phone number" name="remark"
+                              required="required"
+                              th:if="${shopInformation.remark}!=null" th:value="${shopInformation.remark}"
+                              th:text="${shopInformation.remark}"></textarea>
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Categorty</h3>
+                </div>
+                <div class="publish_content">
+                    <select class="choose_first_type">
+                        <option id="type_1" selected="selected">digital technology</option>
+                        <option id="type_2">audiovisual appliances</option>
+                        <option id="type_3">Shoes and clothes</option>
+                        <option id="type_4">household items</option>
+                        <option id="type_5">Books and stationery</option>
+                        <option id="type_6">Others</option>
+                    </select><span class="to_left">--</span>
+                    <select class="choose_second_type">
+                        <option value="1">Almost Damaged</option>
+                        <option value="2">Slightly Used</option>
+                        <option value="3">In New Condition</option>
+                    </select><span class="to_left">--</span>
+                    <select class="choose_third_type" name="sort">
+                        <option value="1">Almost Damaged</option>
+                        <option value="2">Slightly Used</option>
+                        <option value="3">In New Condition</option>
+                    </select>
+                    <br/>
+                    <!--<span th:text="${sort}" th:value="${sort}"></span>-->
+                </div>
+            </div>
+            <div class="publish_one_par">
+                <div class="publish_title">
+                    <h3>Picture</h3>
+                </div>
+                <div class="img_content">
+                    <input class="upload_img_input" type="file" name="image" required="required"/>
+                </div>
+                <img src="" class="show_choose_img" id="show_choose_img"/>
+                <img src="" class="show_choose_img" th:if="${shopInformation.image}!=null"
+                     th:src="${shopInformation.image}"/>
+            </div>
+            <div class="submit_content_div">
+                <input type="submit" value="Submit" class="submit_input"/>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <p>Copyright © 2024.Comp208 All rights reserved.<a href="/"></a></p>
+    </footer>
+</div>
+</body>
+</html>

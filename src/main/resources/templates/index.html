@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Liverpool Second-hand Trading Platform</title>
+    <link rel="icon" href="/img/page_icon.png"/>
+    <link th:href="@{/css/home_page/home_page_circle.css}" rel="stylesheet"/>
+    <link th:href="@{/css/home_page/header_and_nav.css}" rel="stylesheet"/>
+    <link th:href="@{/css/home_page/bottom_ifon_and_feature.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery-1.3.2.min.js}"></script>
+    <script th:src="@{/js/home/home_page_circle.js}"></script>
+    <script th:src="@{/js/home/header_model_js.js}"></script>
+</head>
+<body>
+
+<header th:include="header :: copy"></header>
+<div th:include="short_nav_show :: short_nav_show" class="short_nav_show"></div>
+<nav th:include="my_nav :: my_nav" class="my_nav"></nav>
+<div th:include="personal_nav :: personal_nav" class="personal_nav"></div>
+<div class="my_slider">
+    <div class="my_slide">
+        <h1> Anfield </h1>
+        <p>
+            Anfield is a football stadium in Anfield, Liverpool, England,
+            which has a seating capacity of 61,276, making it the fifth-largest football stadium in England.[3] It has been the home of Liverpool since their formation in 1892. It was originally the home of Everton from 1884 to 1891, before they moved to Goodison
+            Park after a dispute with the club president，
+            </p>
+        <div class="slide_img">
+            <img src="https://th.bing.com/th?id=OLC.EEv2W5H9N5aZfg480x360&w=249&h=140&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" style="width: 400px;height: 270px"/>
+        </div>
+    </div>
+    <div class="my_slide">
+        <h1> University of Liverpool（UoL) </h1>
+        <p>
+            Liverpool University is the first university in the UK to establish departments in architecture, urban design, biochemistry, and oceanography. It houses leading institutions such as the National Oceanography Centre and the Johnston Laboratories. </p>
+        <div class="slide_img">
+            <img src="https://th.bing.com/th/id/R.82a4a4ef183bfb6332d3d62587a6d1ff?rik=6dNTkxpeYLkA1g&riu=http%3a%2f%2f2.bp.blogspot.com%2f-tbv_sM5psWE%2fTZhMoWW8pOI%2fAAAAAAAAAmM%2fGDbsrP53Kd0%2fs1600%2fliverpool234.jpg&ehk=XS4u3p43tP4t8L0vJvi3%2fwk4GPDnGsv6slWKAGM%2fI2k%3d&risl=&pid=ImgRaw&r=0" style="width: 400px;height: 270px"/>
+        </div>
+    </div>
+    <div class="my_slide">
+        <h1>The Beatles</h1>
+        <p>
+            The Beatles, a British rock band, was formed in 1960 in Liverpool, England. It consisted of four members: John Lennon, Ringo Starr, Paul McCartney, and George Harrison.
+        </p>
+        <div class="slide_img">
+            <img src="https://th.bing.com/th/id/R.d0472dac4c69fb0dc85fc7001bd74749?rik=P7QSo8wjr9qKIA&riu=http%3a%2f%2fimage2.sina.com.cn%2fent%2fy%2f2006-04-27%2fc6686059c1bd9570c1835db64df4e2f2.jpg&ehk=8tmKhQVV4x2mXnWtTFB13zSFWk7jTTYKfA07pKujya0%3d&risl=&pid=ImgRaw&r=0" style="width: 400px;height: 270px"/>
+        </div>
+    </div>
+    <div class="my_slide">
+        <h1>Apple vision pro </h1>
+        <p>
+            Apple Vision Pro will change the way users interact with their favorite apps, capturing and reliving memories, enjoying fantastic viewing experiences, and connecting with others via FaceTime calls, bringing new dimensions to powerful and personalized computing.
+        </p>
+        <div class="slide_img">
+            <img src="https://th.bing.com/th?id=OIP.YRalSatXfhTrAaF_up6oRQHaID&w=70&h=104&c=7&o=6&dpr=1.3&pid=13.1" style="width: 400px;height: 270px"/>
+        </div>
+    </div>
+    <div class="my_slide current">
+        <h1>Keyboard</h1>
+        <p>
+
+            Even in the most intense gaming sessions, the keyboard can still record input commands with the protection of anti-ghosting functionality. The 26-key anti-ghosting feature allows you to press any number of keys in any order to accurately execute the desired functions. </p>
+        <div class="slide_img">
+            <img src="/img/home/58f834abNfcc1c117.jpg" style="width: 400px;height: 270px"/>
+        </div>
+    </div>
+    <div class="left_border">
+        <span class="left_turn"></span>
+    </div>
+    <div class="right_border">
+        <span class="right_turn"></span>
+    </div>
+</div>
+<div class="featured_products">
+    <h2 style="color: white;">Popular goods</h2>
+    <figure class="product" th:each="o:${shopInformationBean}">
+        <div class="product_img_div">
+            <img src="/img/home/feature_products/cont1.jpg" class="show_img" th:src="${o.image}"/>
+        </div>
+        <p class="show_tip" th:text="${o.remark}"></p>
+        <input class="product_id" type="hidden" th:value="${o.id}"/>
+        <a class="product_name" th:href="'/selectById.do?id='+${o.id}" th:text="${o.name}" th:title="${o.name}">1111</a><br/>
+        <!--<span class="product_name" th:text="${o.name}" th:value="${o.id}">Big block Leather Bag</span><br/>-->
+        <span class="product_cost" th:text="''+${o.price}+'pound'">$350.00</span><br/><br/>
+        <span class="buy product_1" th:value="${o.id}">Add to cart</span>
+    </figure>
+</div>
+<footer>
+    <p>Copyright © 2024.Comp208 Team10 All rights reserved.<br>
+        If you have any questions related to the website, please send an email to <a href="mailto:yuxia.meng@outlook.com">yuxia.meng@outlook.com.</a></p>
+</footer>
+
+</body>
+</html>
